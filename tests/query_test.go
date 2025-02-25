@@ -902,6 +902,7 @@ func TestPluckWithSelect(t *testing.T) {
 }
 
 func TestSelectWithVariables(t *testing.T) {
+	//t.Skip()
 	DB.Save(&User{Name: "select_with_variables"})
 
 	rows, _ := DB.Table("users").Where("name = ?", "select_with_variables").Select("? as fake", gorm.Expr("name")).Rows()

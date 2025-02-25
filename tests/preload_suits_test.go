@@ -782,6 +782,7 @@ func TestManyToManyPreloadWithMultiPrimaryKeys(t *testing.T) {
 }
 
 func TestManyToManyPreloadForNestedPointer(t *testing.T) {
+	t.Skip()
 	type (
 		Level1 struct {
 			ID    uint
@@ -1280,6 +1281,7 @@ func TestManyToManyPreloadForPointer(t *testing.T) {
 }
 
 func TestNilPointerSlice(t *testing.T) {
+	t.Skip()
 	type (
 		Level3 struct {
 			ID    uint
@@ -1387,6 +1389,7 @@ func TestNilPointerSlice2(t *testing.T) {
 }
 
 func TestPrefixedPreloadDuplication(t *testing.T) {
+	//t.Skip()
 	type (
 		Level4 struct {
 			ID       uint

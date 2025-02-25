@@ -46,6 +46,7 @@ func TestRow(t *testing.T) {
 }
 
 func TestRows(t *testing.T) {
+	//t.Skip()
 	user1 := User{Name: "RowsUser1", Age: 1}
 	user2 := User{Name: "RowsUser2", Age: 10}
 	user3 := User{Name: "RowsUser3", Age: 20}
@@ -70,6 +71,7 @@ func TestRows(t *testing.T) {
 }
 
 func TestRaw(t *testing.T) {
+	//t.Skip()
 	user1 := User{Name: "ExecRawSqlUser1", Age: 1}
 	user2 := User{Name: "ExecRawSqlUser2", Age: 10}
 	user3 := User{Name: "ExecRawSqlUser3", Age: 20}

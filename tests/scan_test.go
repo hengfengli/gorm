@@ -120,6 +120,7 @@ func TestScan(t *testing.T) {
 }
 
 func TestScanRows(t *testing.T) {
+	//t.Skip()
 	user1 := User{Name: "ScanRowsUser1", Age: 1}
 	user2 := User{Name: "ScanRowsUser2", Age: 10}
 	user3 := User{Name: "ScanRowsUser3", Age: 20}
@@ -164,6 +165,7 @@ func TestScanRows(t *testing.T) {
 }
 
 func TestScanRowsNullValuesScanToFieldDefault(t *testing.T) {
+	//t.Skip()
 	DB.Save(&User{})
 
 	rows, err := DB.Table("users").

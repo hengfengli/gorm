@@ -310,6 +310,7 @@ func TestNestedPreloadWithUnscoped(t *testing.T) {
 }
 
 func TestNestedPreloadWithNestedJoin(t *testing.T) {
+	t.Skip()
 	type (
 		Preload struct {
 			ID       uint

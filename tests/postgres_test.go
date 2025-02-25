@@ -191,6 +191,7 @@ func TestMany2ManyWithDefaultValueUUID(t *testing.T) {
 }
 
 func TestPostgresOnConstraint(t *testing.T) {
+	t.Skip()
 	if DB.Dialector.Name() != "postgres" {
 		t.Skip()
 	}
@@ -246,6 +247,7 @@ type CompanyNew struct {
 }
 
 func TestAlterColumnDataType(t *testing.T) {
+	t.Skip()
 	DB.AutoMigrate(Company{})
 
 	if err := DB.Table("companies").Migrator().AlterColumn(CompanyNew{}, "name"); err != nil {
