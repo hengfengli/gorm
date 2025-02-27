@@ -94,7 +94,7 @@ func TestUpsertSlice(t *testing.T) {
 		{Code: "upsert-slice2", Name: "Upsert-slice2"},
 		{Code: "upsert-slice3", Name: "Upsert-slice3"},
 	}
-	DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&langs)
+	DB.Clauses(clause.OnConflict{DoNothing: true, Columns: []clause.Column{{Name: "code"}}}).Create(&langs)
 
 	var langs2 []Language
 	if err := DB.Find(&langs2, "code LIKE ?", "upsert-slice%").Error; err != nil {
@@ -103,7 +103,7 @@ func TestUpsertSlice(t *testing.T) {
 		t.Errorf("should only find only 3 languages, but got %+v", langs2)
 	}
 
-	DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&langs)
+	DB.Clauses(clause.OnConflict{DoNothing: true, Columns: []clause.Column{{Name: "code"}}}).Create(&langs)
 	var langs3 []Language
 	if err := DB.Find(&langs3, "code LIKE ?", "upsert-slice%").Error; err != nil {
 		t.Errorf("no error should happen when find languages with code, but got %v", err)
@@ -118,7 +118,7 @@ func TestUpsertSlice(t *testing.T) {
 
 	if err := DB.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "code"}},
-		DoUpdates: clause.AssignmentColumns([]string{"name"}),
+		DoUpdates: clause.AssignmentColumns([]string{"code","name"}),
 	}).Create(&langs).Error; err != nil {
 		t.Fatalf("failed to upsert, got %v", err)
 	}
