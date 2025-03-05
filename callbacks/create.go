@@ -3,7 +3,7 @@ package callbacks
 import (
 	"fmt"
 	"reflect"
-	"strings"
+	//"strings"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -348,32 +348,33 @@ func ConvertToCreateValues(stmt *gorm.Statement) (values clause.Values) {
 	if c, ok := stmt.Clauses["ON CONFLICT"]; ok {
 		if onConflict, _ := c.Expression.(clause.OnConflict); onConflict.UpdateAll {
 			if stmt.Schema != nil && len(values.Columns) >= 1 {
-				selectColumns, restricted := stmt.SelectAndOmitColumns(true, true)
+				//selectColumns, restricted := stmt.SelectAndOmitColumns(true, true)
 
 				columns := make([]string, 0, len(values.Columns)-1)
 				for _, column := range values.Columns {
-					if field := stmt.Schema.LookUpField(column.Name); field != nil {
-						if v, ok := selectColumns[field.DBName]; (ok && v) || (!ok && !restricted) {
-							if !field.PrimaryKey && (!field.HasDefaultValue || field.DefaultValueInterface != nil ||
-								strings.EqualFold(field.DefaultValue, "NULL")) && field.AutoCreateTime == 0 {
-								if field.AutoUpdateTime > 0 {
-									assignment := clause.Assignment{Column: clause.Column{Name: field.DBName}, Value: curTime}
-									switch field.AutoUpdateTime {
-									case schema.UnixNanosecond:
-										assignment.Value = curTime.UnixNano()
-									case schema.UnixMillisecond:
-										assignment.Value = curTime.UnixMilli()
-									case schema.UnixSecond:
-										assignment.Value = curTime.Unix()
-									}
+					columns = append(columns, column.Name)
+		//			if field := stmt.Schema.LookUpField(column.Name); field != nil {
+		//				if v, ok := selectColumns[field.DBName]; (ok && v) || (!ok && !restricted) {
+		//					if !field.PrimaryKey && (!field.HasDefaultValue || field.DefaultValueInterface != nil ||
+		//						strings.EqualFold(field.DefaultValue, "NULL")) && field.AutoCreateTime == 0 {
+								//if field.AutoUpdateTime > 0 {
+								//	assignment := clause.Assignment{Column: clause.Column{Name: field.DBName}, Value: curTime}
+								//	switch field.AutoUpdateTime {
+							//		case schema.UnixNanosecond:
+							//			assignment.Value = curTime.UnixNano()
+							//		case schema.UnixMillisecond:
+							//			assignment.Value = curTime.UnixMilli()
+							//		case schema.UnixSecond:
+							//			assignment.Value = curTime.Unix()
+							//		}
 
-									onConflict.DoUpdates = append(onConflict.DoUpdates, assignment)
-								} else {
-									columns = append(columns, column.Name)
-								}
-							}
-						}
-					}
+							//		onConflict.DoUpdates = append(onConflict.DoUpdates, assignment)
+							//	} else {
+		//							columns = append(columns, column.Name)
+							//	}
+		//					}
+		//				}
+		//			}
 				}
 
 				onConflict.DoUpdates = append(onConflict.DoUpdates, clause.AssignmentColumns(columns)...)

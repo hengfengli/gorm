@@ -250,6 +250,7 @@ func (m Migrator) CreateTable(values ...interface{}) error {
 			for _, idx := range stmt.Schema.ParseIndexes() {
 				if m.CreateIndexAfterCreateTable {
 					defer func(value interface{}, name string) {
+						//fmt.Println("mytest")
 						if err == nil {
 							err = tx.Migrator().CreateIndex(value, name)
 						}
@@ -814,7 +815,9 @@ type BuildIndexOptionsInterface interface {
 
 // CreateIndex create index `name`
 func (m Migrator) CreateIndex(value interface{}, name string) error {
+	//fmt.Printf("mytest - builtin - CreateIndex is called: %s\n", name)
 	return m.RunWithValue(value, func(stmt *gorm.Statement) error {
+		//fmt.Printf("mytest - builtin - CreateIndex - RunWithValue is called: %s\n", name)
 		if stmt.Schema == nil {
 			return errors.New("failed to get schema")
 		}
@@ -842,8 +845,8 @@ func (m Migrator) CreateIndex(value interface{}, name string) error {
 
 			return m.DB.Exec(createIndexSQL, values...).Error
 		}
-
-		return fmt.Errorf("failed to create index with name %s", name)
+		//return fmt.Errorf("failed to create index with name %s", name)
+		return fmt.Errorf("idx is null - index with name %s", name)
 	})
 }
 

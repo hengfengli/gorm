@@ -369,6 +369,10 @@ func onConflictOption(stmt *gorm.Statement, s *schema.Schema, defaultUpdatingCol
 			onConflict.DoUpdates = clause.AssignmentColumns(defaultUpdatingColumns)
 		}
 	} else {
+		onConflict.Columns = make([]clause.Column, 0, len(s.PrimaryFieldDBNames))
+		for _, dbName := range s.PrimaryFieldDBNames {
+			onConflict.Columns = append(onConflict.Columns, clause.Column{Name: dbName})
+		}
 		onConflict.DoNothing = true
 	}
 
