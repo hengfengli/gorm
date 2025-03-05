@@ -189,4 +189,5 @@ func TestCustomizeField(t *testing.T) {
 	if int(createWithDefaultTimeResult.AutoUnixNanoCreateTime) != int(createWithDefaultTimeResult.AutoUnixNanoUpdateTime) || createWithDefaultTimeResult.AutoUnixNanoCreateTime != 100 {
 		t.Fatalf("invalid create/update unix nano time: %#v", createWithDefaultTimeResult)
 	}
+
 }
